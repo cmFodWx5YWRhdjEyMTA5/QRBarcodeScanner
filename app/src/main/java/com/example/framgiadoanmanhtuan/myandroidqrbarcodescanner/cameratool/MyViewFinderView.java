@@ -76,6 +76,11 @@ public class MyViewFinderView extends View implements IViewFinder {
         this.mLaserPaint.setColor(laserColor);
     }
 
+    @Override
+    public void setLaserColor(int i) {
+
+    }
+
     public void setMaskColor(int maskColor) {
         this.mFinderMaskPaint.setColor(maskColor);
     }
@@ -90,6 +95,31 @@ public class MyViewFinderView extends View implements IViewFinder {
 
     public void setBorderLineLength(int borderLineLength) {
         this.mBorderLineLength = borderLineLength;
+    }
+
+    @Override
+    public void setLaserEnabled(boolean b) {
+
+    }
+
+    @Override
+    public void setBorderCornerRounded(boolean b) {
+
+    }
+
+    @Override
+    public void setBorderAlpha(float v) {
+
+    }
+
+    @Override
+    public void setBorderCornerRadius(int i) {
+
+    }
+
+    @Override
+    public void setViewFinderOffset(int i) {
+
     }
 
     public void setSquareViewFinder(boolean set) {
