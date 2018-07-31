@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.example.framgiadoanmanhtuan.myandroidqrbarcodescanner.cameratool.MyZXingScannerView;
 import com.google.zxing.Result;
-
 import static android.Manifest.permission.CAMERA;
 
 public class MainActivity extends AppCompatActivity implements MyZXingScannerView.ResultHandler {
@@ -40,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements MyZXingScannerVie
 
         if (currentApiVersion >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
-                //Toast.makeText(getApplicationContext(), "Permission already granted!",
-                //        Toast.LENGTH_LONG).show();
             } else {
                 requestPermission();
             }
