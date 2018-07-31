@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements MyZXingScannerVie
 
         if (currentApiVersion >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
-                //Toast.makeText(getApplicationContext(), "Permission already granted!",
-                //        Toast.LENGTH_LONG).show();
             } else {
                 requestPermission();
             }
