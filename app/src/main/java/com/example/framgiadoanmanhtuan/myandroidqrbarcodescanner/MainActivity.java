@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.example.framgiadoanmanhtuan.myandroidqrbarcodescanner.cameratool.MyZXingScannerView;
 import com.google.zxing.Result;
-
 import static android.Manifest.permission.CAMERA;
 
 public class MainActivity extends AppCompatActivity implements MyZXingScannerView.ResultHandler {
