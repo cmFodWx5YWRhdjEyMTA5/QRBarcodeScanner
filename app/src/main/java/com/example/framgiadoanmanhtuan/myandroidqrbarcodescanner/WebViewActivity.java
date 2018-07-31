@@ -1,0 +1,39 @@
+package com.example.framgiadoanmanhtuan.myandroidqrbarcodescanner;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+public class WebViewActivity extends AppCompatActivity {
+
+    private final String URL = "URL";
+    private WebView mWebView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_webview);
+        mWebView = findViewById(R.id.web_view);
+        Intent intent = getIntent();
+        if (intent != null) {
+            String url = intent.getStringExtra(URL);
+            mWebView.getSettings().setJavaScriptEnabled(true);
+            mWebView.setInitialScale(1);
+            mWebView.getSettings().setUseWideViewPort(true);
+            mWebView.setWebViewClient(new WebViewClient());
+            mWebView.setWebChromeClient(new WebChromeClient());
+            mWebView.getSettings().setSupportZoom(true);
+            mWebView.getSettings().setDisplayZoomControls(true);
+            mWebView.getSettings().setBuiltInZoomControls(true);
+            mWebView.clearCache(true);
+            mWebView.setBackgroundColor(Color.TRANSPARENT);
+            mWebView.loadUrl(url);
+        }
+    }
+}

@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.example.framgiadoanmanhtuan.myandroidqrbarcodescanner.cameratool.MyZXingScannerView;
 import com.google.zxing.Result;
@@ -23,36 +24,37 @@ public class MainActivity extends AppCompatActivity implements MyZXingScannerVie
     private static final int REQUEST_CAMERA = 1;
     private MyZXingScannerView scannerView;
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private final String URL = "URL";
+    private RelativeLayout mRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         scannerView = new MyZXingScannerView(this);
-        setContentView(scannerView);
+        setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Scan Barcode and QR code");
+        mRelativeLayout = findViewById(R.id.layout);
+        mRelativeLayout.addView(scannerView);
         int currentApiVersion = Build.VERSION.SDK_INT;
 
-        if(currentApiVersion >=  Build.VERSION_CODES.M)
-        {
-            if(checkPermission())
-            {
-                Toast.makeText(getApplicationContext(), "Permission already granted!", Toast.LENGTH_LONG).show();
-            }
-            else
-            {
+        if (currentApiVersion >= Build.VERSION_CODES.M) {
+            if (checkPermission()) {
+                //Toast.makeText(getApplicationContext(), "Permission already granted!",
+                //        Toast.LENGTH_LONG).show();
+            } else {
                 requestPermission();
             }
         }
     }
 
-    private boolean checkPermission()
-    {
-        return (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA) == PackageManager.PERMISSION_GRANTED);
+    private boolean checkPermission() {
+        return (ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA)
+                == PackageManager.PERMISSION_GRANTED);
     }
 
-    private void requestPermission()
-    {
-        ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[] { CAMERA }, REQUEST_CAMERA);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MyZXingScannerVie
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
             if (checkPermission()) {
-                if(scannerView == null) {
+                if (scannerView == null) {
                     scannerView = new MyZXingScannerView(this);
                     setContentView(scannerView);
                 }
@@ -80,24 +82,31 @@ public class MainActivity extends AppCompatActivity implements MyZXingScannerVie
         scannerView.stopCamera();
     }
 
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[],
+            int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CAMERA:
                 if (grantResults.length > 0) {
 
                     boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted){
-                        Toast.makeText(getApplicationContext(), "Permission Granted, Now you can access camera", Toast.LENGTH_LONG).show();
-                    }else {
-                        Toast.makeText(getApplicationContext(), "Permission Denied, You cannot access and camera", Toast.LENGTH_LONG).show();
+                    if (cameraAccepted) {
+                        Toast.makeText(getApplicationContext(),
+                                "Permission Granted, Now you can access camera", Toast.LENGTH_LONG)
+                                .show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "Permission Denied, You cannot access and camera",
+                                Toast.LENGTH_LONG).show();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(CAMERA)) {
-                                showMessageOKCancel("You need to allow access to both the permissions",
+                                showMessageOKCancel(
+                                        "You need to allow access to both the permissions",
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                    requestPermissions(new String[]{CAMERA},
+                                                if (Build.VERSION.SDK_INT
+                                                        >= Build.VERSION_CODES.M) {
+                                                    requestPermissions(new String[] { CAMERA },
                                                             REQUEST_CAMERA);
                                                 }
                                             }
@@ -112,8 +121,7 @@ public class MainActivity extends AppCompatActivity implements MyZXingScannerVie
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new android.support.v7.app.AlertDialog.Builder(MainActivity.this)
-                .setMessage(message)
+        new android.support.v7.app.AlertDialog.Builder(MainActivity.this).setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)
                 .create()
@@ -128,17 +136,18 @@ public class MainActivity extends AppCompatActivity implements MyZXingScannerVie
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("New scan", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 scannerView.resumeCameraPreview(MainActivity.this);
             }
         });
-        builder.setNeutralButton("Visit", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Information", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(myResult));
-                startActivity(browserIntent);
+                Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                intent.putExtra(URL, myResult);
+                startActivity(intent);
             }
         });
         builder.setMessage(result.getText());
