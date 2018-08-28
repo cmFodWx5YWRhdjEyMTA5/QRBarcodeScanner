@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements MyZXingScannerVie
         super.onCreate(savedInstanceState);
 
         scannerView = new MyZXingScannerView(this);
-        setContentView(R.layout.activity_main);
+        setContentView(scannerView);
         getSupportActionBar().setTitle("Scan Barcode and QR code");
-        mRelativeLayout = findViewById(R.id.layout);
-        mRelativeLayout.addView(scannerView);
+        //mRelativeLayout = findViewById(R.id.layout);
+        //mRelativeLayout.addView(scannerView);
         int currentApiVersion = Build.VERSION.SDK_INT;
 
         if (currentApiVersion >= Build.VERSION_CODES.M) {
