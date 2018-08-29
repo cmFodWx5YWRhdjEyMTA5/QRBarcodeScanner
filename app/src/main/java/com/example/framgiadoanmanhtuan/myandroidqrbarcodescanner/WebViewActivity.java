@@ -37,6 +37,7 @@ public class WebViewActivity extends AppCompatActivity {
             mWebView.clearCache(true);
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.loadUrl(url);
+
         }
         mWebView.setOnKeyListener(new View.OnKeyListener() {
             @Override
