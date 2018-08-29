@@ -8,4 +8,5 @@
     <color name="laser">#01fceb</color>
     <color name="mask">#ffffff</color>
     <color name="border">#b300ff</color>
+    <color name="transperent">#00fafafa</color>
 </resources>

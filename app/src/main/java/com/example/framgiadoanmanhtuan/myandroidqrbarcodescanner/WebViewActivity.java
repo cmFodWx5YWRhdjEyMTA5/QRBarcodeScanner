@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,7 +24,8 @@ public class WebViewActivity extends AppCompatActivity {
         mWebView = findViewById(R.id.web_view);
         Intent intent = getIntent();
         if (intent != null) {
-            String url = intent.getStringExtra(URL);
+            String query = intent.getStringExtra(URL);
+            String url = "https://www.google.com/search?q=" + query;
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.setInitialScale(1);
             mWebView.getSettings().setUseWideViewPort(true);
@@ -35,5 +38,21 @@ public class WebViewActivity extends AppCompatActivity {
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.loadUrl(url);
         }
+        mWebView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_BACK:
+                            if (mWebView.canGoBack()) {
+                                mWebView.goBack();
+                                return true;
+                            }
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 }
