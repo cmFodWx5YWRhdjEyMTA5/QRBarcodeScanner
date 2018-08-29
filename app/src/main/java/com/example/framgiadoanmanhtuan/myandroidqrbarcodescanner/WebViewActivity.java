@@ -22,7 +22,8 @@ public class WebViewActivity extends AppCompatActivity {
         mWebView = findViewById(R.id.web_view);
         Intent intent = getIntent();
         if (intent != null) {
-            String url = intent.getStringExtra(URL);
+            String query = intent.getStringExtra(URL);
+            String url = "https://www.google.com/search?q=" + query;
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.setInitialScale(1);
             mWebView.getSettings().setUseWideViewPort(true);
