@@ -38,6 +38,7 @@ public class WebViewActivity extends AppCompatActivity {
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.loadUrl(url);
         }
+        //Navigate back press
         mWebView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
