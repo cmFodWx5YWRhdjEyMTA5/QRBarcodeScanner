@@ -35,6 +35,7 @@ public class WebViewActivity extends AppCompatActivity {
             mWebView.clearCache(true);
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.loadUrl(url);
+
         }
     }
 }
